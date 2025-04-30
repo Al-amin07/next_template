@@ -18,15 +18,14 @@ import { Theme } from "../utils/Theme";
 import { useAuth } from "@/provider/UserProvider";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import './navbar.css'
+
 import { CircleUserRoundIcon } from "lucide-react";
 
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const { user } = useAuth()!
+    const { user, logOut } = useAuth()!
     const pathname = usePathname()
-    console.log({ pathname })
     return (
         <nav className="relative bg-white shadow dark:bg-gray-800">
             <div className="container px-6 py-4 mx-auto">
@@ -85,6 +84,7 @@ const Navbar = () => {
                                 { path: "/", label: "Home" },
                                 { path: "/about", label: "About Us" },
                                 { path: "/contact", label: "Contact Us" },
+                                { path: "/blogs", label: "Blogs" },
 
 
                             ].map((item, index) => (
@@ -103,36 +103,6 @@ const Navbar = () => {
                                     {item.label}
                                 </Link>
                             ))}
-                            {
-                                user && user?.role === 'customer' && <>
-                                    <Link
-
-                                        href={'/find-meals'}
-                                        className={`
-                                            px-3  py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform  lg:mt-0 dark:text-gray-200 hover:bg-primary hover:text-white dark:hover:bg-gray-700
-                                            ${pathname === '/find-meals'
-                                            && "bg-primary text-white "
-
-                                            }
-                                            `}
-                                    >
-                                        Find Meals
-                                    </Link>
-                                    <Link
-
-                                        href={'/order-meal'}
-                                        className={`
-                                            px-3  py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform  lg:mt-0 dark:text-gray-200 hover:bg-primary hover:text-white dark:hover:bg-gray-700
-                                            ${pathname === '/order-meal'
-                                            && "bg-primary text-white "
-
-                                            }
-                                            `}
-                                    >
-                                        Order Meals
-                                    </Link>
-                                </>
-                            }
                         </div>
 
                         <div className="flex items-center gap-4 mt-4 lg:mt-0">
@@ -195,7 +165,7 @@ const Navbar = () => {
                                                     <DropdownMenuItem>Support</DropdownMenuItem>
                                                     <DropdownMenuItem disabled>API</DropdownMenuItem>
                                                     <DropdownMenuSeparator />
-                                                    <DropdownMenuItem>
+                                                    <DropdownMenuItem onClick={() => logOut()}>
                                                         Log out
                                                         <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                                                     </DropdownMenuItem>

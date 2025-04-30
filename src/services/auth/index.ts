@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
 export const registerUser = async (userData: FieldValues) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API}/users/register`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API}/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -25,7 +25,7 @@ export const registerUser = async (userData: FieldValues) => {
 };
 export const loginUser = async (userData: FieldValues) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API}/users/login`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API}/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -42,6 +42,11 @@ export const loginUser = async (userData: FieldValues) => {
   } catch (error: any) {
     return Error(error);
   }
+};
+
+export const logOutUser = async () => {
+  (await cookies()).delete("accessToken");
+  (await cookies()).delete("refreshToken");
 };
 
 export const getCurrentUser = async () => {

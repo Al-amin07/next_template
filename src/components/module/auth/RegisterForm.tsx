@@ -28,8 +28,7 @@ import { useRouter } from 'next/navigation';
 import { registrationSchema } from './schema';
 const RegistrationForm = () => {
     interface RegisterFormValues {
-        name: string;
-        phone: string
+        fullName: string;
         email: string;
         password: string;
         terms?: boolean;
@@ -72,7 +71,7 @@ const RegistrationForm = () => {
                         <CardContent className="space-y-6">
                             <FormField
                                 control={form.control}
-                                name="name"
+                                name="fullName"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className='text-black/85'>Full Name</FormLabel>
@@ -100,21 +99,7 @@ const RegistrationForm = () => {
                                     </FormItem>
                                 )}
                             />
-                            <FormField
-                                control={form.control}
-                                name="phone"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className='text-black/85'>Phone</FormLabel>
-                                        <div className="relative">
-                                            <FormControl>
-                                                <Input placeholder="Enter phone" className="pl-4 " {...field} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </div>
-                                    </FormItem>
-                                )}
-                            />
+
 
                             <FormField
                                 control={form.control}

@@ -1,5 +1,5 @@
 "use client"
-import { getCurrentUser } from "@/services/auth";
+import { getCurrentUser, logOutUser } from "@/services/auth";
 import { IUser } from "@/types";
 import { createContext, useContext, useEffect, useState } from "react"
 import { Toaster } from 'sonner';
@@ -9,6 +9,7 @@ export interface IUserContext {
     setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
     isLoading: boolean;
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+    logOut: () => Promise<void>
 }
 
 export const UserContext = createContext<IUserContext | null>(null)
@@ -23,11 +24,17 @@ export default function UserProvider({ children }: { children: React.ReactNode }
     useEffect(() => {
         handleUser();
     }, [isLoading])
+    const logOut = async () => {
+        await logOutUser()
+        setUser(null);
+        setIsLoading(true);
+    }
     const authInfo = {
         user,
         setUser,
         isLoading,
-        setIsLoading
+        setIsLoading,
+        logOut
     }
     return (
         <UserContext.Provider value={authInfo}>
